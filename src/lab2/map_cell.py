@@ -28,7 +28,7 @@ For example, calling get_row_col("A3") should return the tuple (2, 0) because A3
 ''' The following function takes in a String of length 2, being an upper case letter and a digit
 # the function uses "ord()" to convert the first letter to an ascii character
 '''
-cell = "A3"                          # user enters the cell 
+cell = "C3"                          # user enters the cell 
 def get_row_col(cell):
     row = ord(cell[0]) - ord('A')    # subtracting the ascii value of the first letter by 'A's value (65) to get the index of the row
     column = int(cell[1]) - 1        # subtracting one to get the correct column 

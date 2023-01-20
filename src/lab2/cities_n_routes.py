@@ -20,11 +20,13 @@ def get_randomly_spread_cities(size, n_cities):
     [ (23, 34), (3,56), ... ]
     """
 
-    print("Random Cities and their coordinates: ")
+    coordinates = []
     for i in range(n_cities):
-     y = random.randrange(size[1])
-     x = random.randrange(size[0])
-     print(x,y)
+        x = random.randrange(size[0])
+        y = random.randrange(size[1])
+        coordinates.append((x, y))
+
+    return coordinates
 
     # Consider the condition where maximum x size and y size are different
 
@@ -41,7 +43,7 @@ def get_routes(city_names):
     [ ('A', 'B'), ('A', 'C'), ('B', 'C') ]
     """
     combinations = itertools.combinations(city_names, 2)
-    print(list(combinations))
+    return combinations
 
     pass
 
