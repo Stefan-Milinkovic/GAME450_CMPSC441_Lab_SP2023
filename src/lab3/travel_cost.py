@@ -9,6 +9,8 @@ A terrain is generated for you
 '''
 import numpy as np
 
+from bresenham import bresenham
+
 def get_route_cost(route_coordinate, game_map):
     """
     This function takes in a route_coordinate as a tuple of coordinates of cities to connect, 
@@ -40,6 +42,9 @@ def get_route_cost(route_coordinate, game_map):
     """
     # Build a path from start to end that looks like [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 4)]
     pass 
+    start, end = route_coordinate
+    path = list(bresenham(start[0], start[1], end[0], end[1]))
+
     return game_map[tuple(zip(*path))].sum()
 
 
