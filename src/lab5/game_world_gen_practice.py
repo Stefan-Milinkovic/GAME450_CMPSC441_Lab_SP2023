@@ -38,6 +38,15 @@ def generate_surface(size):
     pygame_surface = pygame.surfarray.make_surface(landscape[:, :, :3])
     return pygame_surface
 
+def draw_routes():
+    for start, end in routes[:10]:
+        start_location = city_locations_dict[start]
+        end_location = city_locations_dict[end]
+        pygame.draw.line(screen, color, start_location, end_location, 2)
+
+def draw_cities():
+    for i in city_locations:
+         pygame.draw.circle(screen, color, i, radius)
 
 
 if __name__ == "__main__":
@@ -47,30 +56,14 @@ if __name__ == "__main__":
 
     screen = pygame.display.set_mode(size)
 
-     
-
     city_names = ['Morkomasto', 'Morathrad', 'Eregailin', 'Corathrad', 'Eregarta',
                   'Numensari', 'Rhunkadi', 'Londathrad', 'Baernlad', 'Forthyr']
-    city_locations = [] 
-    routes = get_routes(city_names)
+    city_locations = get_randomly_spread_cities((640,480), 10) 
+    routes = list(get_routes(city_names))
 
     pygame_surface = generate_surface(size)
 
     ''' Setup cities and routes in here'''
-
-    def get_randomly_spread_cities(size, n_cities):
-        coordinates = []
-        for i in range(n_cities):
-            x = random.randrange(size[0])
-            y = random.randrange(size[1])
-            coordinates.append((x, y))
-
-        return coordinates
-
-    def get_routes(city_names):
-        combinations = itertools.combinations(city_names, 2)
-        return combinations
-
 
     city_locations_dict = {name: location for name, location in zip(city_names, city_locations)}
     random.shuffle(routes)
@@ -85,14 +78,14 @@ if __name__ == "__main__":
         screen.blit(pygame_surface, (0, 0))
 
         ''' draw cities '''
-        color = (55, 55, 55)
+        color = (255, 255, 255)
+        radius = 5
 
-        for i in city_locations_dict.keys():
-            pygame.draw.circle(pygame_surface, color, center=(i))
+        draw_cities()
 
+        pygame.display.flip()
 
         ''' draw first 10 routes '''
-        
-        print(city_locations_dict)
+        draw_routes()
 
         pygame.display.flip()
