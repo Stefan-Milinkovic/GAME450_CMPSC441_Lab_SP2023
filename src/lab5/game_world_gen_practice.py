@@ -38,7 +38,7 @@ def generate_surface(size):
     pygame_surface = pygame.surfarray.make_surface(landscape[:, :, :3])
     return pygame_surface
 
-def draw_routes():
+def draw_routes(  ):
     for start, end in routes[:10]:
         start_location = city_locations_dict[start]
         end_location = city_locations_dict[end]
@@ -83,7 +83,6 @@ if __name__ == "__main__":
 
         draw_cities()
 
-        pygame.display.flip()
 
         ''' draw first 10 routes '''
         draw_routes()
