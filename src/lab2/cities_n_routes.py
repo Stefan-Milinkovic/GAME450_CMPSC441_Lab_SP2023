@@ -46,7 +46,7 @@ def get_routes(city_names):
     [ ('A', 'B'), ('A', 'C'), ('B', 'C') ]
     """
     combinations = itertools.combinations(city_names, 2)
-    return combinations
+    return list(combinations)
 
     pass
 
