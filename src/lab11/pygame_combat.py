@@ -11,6 +11,27 @@ AI_SPRITE_PATH = Path("assets/ai.png")
 pygame.font.init()
 game_font = pygame.font.SysFont("Comic Sans MS", 15)
 
+def run_turn(currentGame, player, opponent, players):
+    states = list(reversed([(player.health, player.weapon) for player in players]))
+    for current_player, state in zip(players, states):
+        current_player.selectAction(state)
+
+    currentGame.newRound()
+    currentGame.takeTurn(player, opponent)
+    print("%s's health = %d" % (player.name, player.health))
+    print("%s's health = %d" % (opponent.name, opponent.health))
+    reward = currentGame.checkWin(player, opponent)
+
+def draw_combat_on_screen(combat_surface, screen, player_sprite, opponent_sprite):
+    screen.blit(combat_surface, (0, 0))
+    player_sprite.draw_sprite(screen)
+    opponent_sprite.draw_sprite(screen)
+    text_surface = game_font.render(
+            "Choose s-Sword a-Arrow f-Fire!", True, (0, 0, 150)
+        )
+    screen.blit(text_surface, (50, 50))
+    pygame.display.update()
+
 
 class PyGameComputerCombatPlayer(CombatPlayer):
     def __init__(self, name):
@@ -37,25 +58,14 @@ def run_pygame_combat(combat_surface, screen, player_sprite):
         AI_SPRITE_PATH, (player_sprite.sprite_pos[0] - 100, player_sprite.sprite_pos[1])
     )
 
-    players = [player, opponent]
 
+    
     # Main Game Loop
     while not currentGame.gameOver:
-        screen.blit(combat_surface, (0, 0))
-        player_sprite.draw_sprite(screen)
-        opponent_sprite.draw_sprite(screen)
-        text_surface = game_font.render(
-            "Choose s-Sword a-Arrow f-Fire!", True, (0, 0, 150)
-        )
-        screen.blit(text_surface, (50, 50))
-        pygame.display.update()
+        draw_combat_on_screen(combat_surface, screen, player_sprite, opponent_sprite)
 
-        states = list(reversed([(player.health, player.weapon) for player in players]))
-        for current_player, state in zip(players, states):
-            current_player.selectAction(state)
+        run_turn(currentGame, player, opponent)
 
-        currentGame.newRound()
-        currentGame.takeTurn(player, opponent)
-        print("%s's health = %d" % (player.name, player.health))
-        print("%s's health = %d" % (opponent.name, opponent.health))
-        currentGame.checkWin(player, opponent)
+
+
+
