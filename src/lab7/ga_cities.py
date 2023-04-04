@@ -31,6 +31,29 @@ def game_fitness(cities, idx, elevation, size):
     2. The cities should have a realistic distribution across the landscape
     3. The cities may also not be on top of mountains or on top of each other
     """
+    # assign lower fitness for cities that are underwater
+    for city in cities:
+        if elevation[city[0], city[1]] < 0.05:
+            fitness -= 10
+
+    # assign higher fitness for cities that are closer to the middle of the map
+    for city in cities:
+        distance_to_center = np.sqrt((city[0] - size[0] / 2) ** 2 + (city[1] - size[1] / 2) ** 2)
+        fitness += 1 / (distance_to_center + 1)
+
+    # assign lower fitness for cities that are on top of each other or on top of mountains
+    # this checks to see if the cities are within a certain distance of eachother
+    # if the threshhold of the mountain or another city is within .95, decrease the fitness
+    distances = np.zeros((len(cities), len(cities)))
+    for i, city in enumerate(cities):
+        for j, city2 in enumerate(cities):
+            if i != j:
+                distances[i, j] = np.sqrt((city[0] - city2[0]) ** 2 + (city[1] - city2[1]) ** 2)
+                if distances[i, j] < 5:
+                    fitness -= 10
+                if elevation[city[0], city[1]] > 0.95 or elevation[city2[0], city2[1]] > 0.95:
+                    fitness -= 10
+
     return fitness
 
 
