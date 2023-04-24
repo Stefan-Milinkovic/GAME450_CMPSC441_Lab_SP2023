@@ -75,6 +75,55 @@ def run_episodes(n_episodes):
             the values are dictionaries of actions and their values.
     '''
 
+    # creating random players
+    player1 = PyGameComputerCombatPlayer("Urus")
+    player2 = PyGameComputerCombatPlayer("Aventi")
+
+    # creating a random episode with these players
+    randomEpisode = run_random_episode(player1, player2)
+
+    # storing the returns for history 
+    historyReturn = get_history_returns(randomEpisode)
+
+    # for the game we need to iterate between states and actions
+    # iterate through each state in the returns dictionary
+    for state in historyReturn:
+        # for each state iterate through its corresponding actions
+        for action in historyReturn[state]:
+            # check to see if state doesn't exist in the action_values dictionary
+            if state not in action_values:
+                
+                # create a temporary dictionary to store the current state, action and return
+                stored_items = {state: {action: [historyReturn[state][action]]}}
+                # update action_values with this dictionary
+                action_values.update(stored_items)
+
+            # if state does exist in the action_values dictionary, 
+            else:
+                # check to see if current action already exists for the state being checked
+                if action not in action_values[state]:
+                    # if action doesn't exist add it to correct return value
+                    action_values[state][action] = [historyReturn[state][action]]
+                else:
+                    # if action already exists, add it to current return value in the list
+                    action_values[state][action].append(historyReturn[state][action])
+    
+    # calculating the average return value for each state/ action pair in the dict
+    # iterate through each state in the action_values dictionary
+    for state in action_values:
+        # iterate thorough the actions associated with each state
+        for action in action_values[state]:
+            # set the total to 0 and iterate through list of returns
+            total_return = 0
+            for ret in action_values[state][action]:
+                # add the total return to the current iteration
+                total_return += ret
+            
+            # set value associated with each state/ action as the average
+            action_values[state][action] = (total_return / len(action_values[state][action]))
+
+    
+    # return updated action_values dictionary with the new average return values
     return action_values
 
 

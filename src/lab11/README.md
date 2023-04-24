@@ -13,9 +13,9 @@ You can just use some hard coded actions for the agent to take at this point.
 Submit the code by the end of the week to assignment 'Lab 11: Project Handoff (Task 1)'.
 
 > Code created in this lab was created with help from ChatGPT. \n
-> The prompt used was:
+> The prompt used was: 
 >     Create a code to move a sprite across a pygame window with a given start location and end location with a constant speed. 
-> The response was:
+> The response was: 
 ```
 import pygame
 import math
