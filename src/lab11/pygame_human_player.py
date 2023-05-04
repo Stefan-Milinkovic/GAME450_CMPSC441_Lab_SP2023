@@ -1,14 +1,18 @@
 import pygame
 from lab11.turn_combat import CombatPlayer
+from lab3.travel_cost import get_route_cost
 
 
 class PyGameHumanPlayer:
     def __init__(self) -> None:
+        self.balance = 10
         pass
 
     def selectAction(self, state):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.quit()
+            if get_route_cost > self.balance:
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
                 if ord("0") <= event.key <= ord("9"):

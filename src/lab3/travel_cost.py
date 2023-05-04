@@ -45,7 +45,20 @@ def get_route_cost(route_coordinate, game_map):
     start, end = route_coordinate
     path = list(bresenham(start[0], start[1], end[0], end[1]))
 
-    return game_map[tuple(zip(*path))].sum()
+    elevations = [game_map[x, y] for x, y in path]
+    elevation_sum = sum(elevations)
+
+    # Check if the sum of elevations along the path is above a mountain
+    if elevation_sum > 1.5:
+        # If it is, double the cost of the route
+        cost = 2 * game_map[tuple(zip(*path))].sum()
+    else:
+        # Otherwise, calculate the cost normally
+        cost = game_map[tuple(zip(*path))].sum()
+
+    return cost
+    # return game_map[tuple(zip(*path))].sum()
+
 
 
 def route_to_coordinates(city_locations, city_names, routes):

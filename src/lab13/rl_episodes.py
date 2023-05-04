@@ -21,6 +21,7 @@ sys.path.append(str((Path(__file__) / ".." / "..").resolve().absolute()))
 from lab11.pygame_combat import PyGameComputerCombatPlayer
 from lab11.turn_combat import CombatPlayer
 from lab12.episode import run_episode
+from ExtraCredit.ec import Crown
 
 from collections import defaultdict
 import random
@@ -144,6 +145,8 @@ def test_policy(policy):
         total_reward += sum(
             [reward for _, _, reward in run_episode(*players)]
         )
+    
+    Crown()
     return total_reward / 100
 
 
@@ -153,3 +156,4 @@ if __name__ == "__main__":
     optimal_policy = get_optimal_policy(action_values)
     print(optimal_policy)
     print(test_policy(optimal_policy))
+    
